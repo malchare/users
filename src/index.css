@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+table.table-striped tbody tr:nth-of-type(odd) {
+  background: #f9f9f9;
+}
+
+table td, table th {
+  text-align: left;
+  color: grey;
+}
+
+.logo-unamo {
+  text-align: left;
+}
+
+.removeButton {
+  cursor: pointer;
+}
