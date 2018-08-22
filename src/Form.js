@@ -1,5 +1,4 @@
 import React from 'react';
-import FormErrors from './FormErrors'
 
 class Form extends React.Component {
     
@@ -37,6 +36,9 @@ class Form extends React.Component {
         if(this.state.formValid) {
             this.props.addUserFunc(name, email);
         }
+        this.props.show();
+        this.props.info();
+        
         event.preventDefault();
     }
 
@@ -61,23 +63,27 @@ class Form extends React.Component {
         let email = this.state.email;
         if(name || email) {
             return (
-                <button onClick={this.clear}></button>
+                <div className="reset" onClick={this.clear}>Reset fields</div>
             );
         }
     }
+
+
 
     validateField(fieldName, value) {
         let fieldValidationErrors = this.state.formErrors;
         let emailValid = this.state.emailValid;
         let nameValid = this.state.nameValid;
-      
+        
         switch(fieldName) {
             case 'name':
-                nameValid = value.toString().length <= 20;
+                nameValid = (value.toString().length <= 20) && (value.toString().length > 0);
                 fieldValidationErrors.name = nameValid ? '' : 'is too long';    
                 break;
             case 'email':
-                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                let existsEmail = false;
+                existsEmail = this.props.checkEmail(value);
+                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) && value.length > 0 && existsEmail;
                 fieldValidationErrors.email = emailValid ? '' : 'invalid';
                 break;
             default:
@@ -89,19 +95,21 @@ class Form extends React.Component {
 
     validateForm() {
         this.setState({formValid: this.state.nameValid && this.state.emailValid});
+        console.log(this.state.formErrors);
     }
 
     render() {
-        return(
-            <div>
+        return(         
             <form onSubmit={this.handleSubmit}>
-                <input ref={this.nameInput} id="nameInput" name="name" type="text" placeholder="name" onChange={(event) => this.handleUserInput(event)}/>
-                <input id="emailInput" type="email" name="email" placeholder="email" onChange={(event) => this.handleUserInput(event)}/>
-                <input disabled={!this.state.formValid} type="submit" value="Submit"/>
+                <div className="form-group">
+                    <input ref={this.nameInput} id="nameInput" className="form-control" name="name" type="text" placeholder="name" onChange={(event) => this.handleUserInput(event)}/>
+                </div>
+                <div className="form-group">
+                    <input id="emailInput" className="form-control" type="email" name="email" placeholder="email" onChange={(event) => this.handleUserInput(event)}/>
+                </div>
+                <input disabled={!this.state.formValid} className="btn btn-success" type="submit" value="Submit"/>
                 {this.resetInputs()}
             </form>
-                <FormErrors formErrors={this.state.formErrors} />
-            </div>
         );
     }
 

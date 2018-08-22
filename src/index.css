@@ -4,6 +4,14 @@ body {
   font-family: sans-serif;
 }
 
+.App, .App .App-header, html {
+  background-color: #f6f9f7;
+}
+
+.App .App-header {
+  height:100px;
+}
+
 table.table-striped tbody tr:nth-of-type(odd) {
   background: #f9f9f9;
 }
@@ -13,10 +21,83 @@ table td, table th {
   color: grey;
 }
 
-.logo-unamo {
-  text-align: left;
+table tr th:first-child {
+  padding-left: 22px;
+}
+
+.userCol {
+  cursor: pointer;
+}
+
+.app-content {
+  box-shadow: 0px 2px 4px #d8d8d8;
+  background-color: white;
+  border-radius: 4px;
+}
+.web-app {
+  float: left;
+  font-weight: 600;
+}
+
+.web-app a {
+  color: #00C1B3;
+  font-size: 32px;
+  text-decoration: none;
+}
+
+.web-app a:hover {
+  text-decoration:none;
+  color: #00C1B3;
 }
 
 .removeButton {
   cursor: pointer;
+}
+
+#form-user .btn-add-user {
+  font-weight: bold;
+  float: left;
+  margin: 20px 0px 20px 20px;
+}
+
+#form-user .btn-add-user:disabled {
+  background: none;
+  color: #28a745;
+}
+
+.info-list-users {
+  float: left;
+  margin-top: 27px;
+  margin-left: 30px;
+  font-weight: bold;
+  color: #545454;
+}
+
+#form-user .form-control {
+  float: left; 
+  width: 30%;
+  margin: 20px 0px 20px 20px;
+}
+
+#form-user input[type=submit] {
+  float: left;
+  margin: 20px 0px 20px 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.reset {
+  float: left;
+  margin: 27px;
+  color: red;
+  cursor: pointer;
+}
+
+
+.foot p {
+    font-size: 11px;
+    color: gainsboro;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-bottom: 0px;
 }

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import logounamo from './assets/logo-unamo-main.svg';
 import './App.css';
 import CurrentUsers from './CurrentUsers';
 import AddUser from './AddUser';
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import {faTimes } from '@fortawesome/free-solid-svg-icons'
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTimes, faExclamationCircle, faPlusCircle, faCheck, faSort } from '@fortawesome/free-solid-svg-icons';
 
-library.add(faTimes)
+library.add(faTimes, faExclamationCircle, faPlusCircle, faCheck, faSort)
 
 class App extends Component {
 
@@ -17,12 +15,14 @@ class App extends Component {
 
     this.state = {
       users: [],
-      sort: 'asc'
+      sort: 'asc',
+      param: ''
     }
 
     this.deleteUserFromList = this.deleteUserFromList.bind(this);
     this.addUserToList = this.addUserToList.bind(this);
-    this.sortowanie = this.sortowanie.bind(this);
+    this.sortTable = this.sortTable.bind(this);
+    this.checkEmail = this.checkEmail.bind(this);
   }
 
   componentDidMount() {
@@ -46,7 +46,18 @@ class App extends Component {
     this.state.users.forEach((user, index) => {
       user.id = index + 1;
     });
-    console.log(this.state.users);
+  }
+
+  checkEmail(email) {
+    let emailExist = false;
+    this.state.users.forEach((user, index) => {
+        if(user.email === email) {
+          emailExist = true;
+          return;
+        }
+    });
+    if(emailExist) return false;
+    else return true;
   }
 
   addUserToList = (nameInput, emailInput) => {
@@ -60,25 +71,25 @@ class App extends Component {
     });
   }
 
-  sortowanie() {
-    //console.log("ssssss");
-    if(this.state.sort === 'asc')
-    {
-      const tableSort = this.state.users.sort((a, b) => a.name > b.name)
-      this.setState({
-        users: tableSort,
-      });
+  sortTable() {
+    let tableSort;
 
+    if(this.state.sort === 'asc') {
+      tableSort = this.state.users.sort((a, b) => a.name > b.name)
     } else {
-      const tableSort = this.state.users.sort((a, b) => a.name < b.name)
-      this.setState({
-        users: tableSort,
-      });
+      tableSort = this.state.users.sort((a, b) => a.name < b.name)  
     }
 
-    if (this.state.sort === 'asc') this.setState({ sort: 'desc' })
-    else this.setState({ sort: 'asc' })
-    //console.log(table);
+    this.setState({
+      users: tableSort
+    });
+
+    if (this.state.sort === 'asc') {
+      this.setState({ sort: 'desc' });
+    }
+    else {
+      this.setState({ sort: 'asc' });
+    }
   }
 
   render() {
@@ -87,17 +98,19 @@ class App extends Component {
 
     return (
       <div className="App">
-       
-        <header className="App-header">
-          <img className="logo-unamo" src={logounamo} alt="logo" title="logo unamo"/>
-          <div className=""></div>
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
         <div className="container">
-          <AddUser addUser={users.length <= 10} addUserFunc={this.addUserToList}/>
-          {users ? <CurrentUsers usersList={users} deleteFunc={this.deleteUserFromList}/> : 'Loading...'} 
-
-          <button onClick={this.sortowanie}></button>
+          <header className="App-header">
+            <div className="web-app">
+              <a href="" rel="noopener noreferrer">Users app</a>
+            </div>
+          </header>
+          <div className="app-content">
+            <AddUser addUser={users.length >= 10} addUserFunc={this.addUserToList} checkEmail={this.checkEmail}/>
+            {users ? <CurrentUsers usersList={users} deleteFunc={this.deleteUserFromList} sort={this.sortTable}/> : 'Loading...'} 
+          </div>
+        </div>
+        <div className="foot">
+          <p>&copy; 2018 Małgorzata Charewicz</p>
         </div>
       </div>
  

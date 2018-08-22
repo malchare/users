@@ -1,8 +1,6 @@
 import React from 'react';
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-
 
 class CurrentUsers extends React.Component {
 
@@ -46,7 +44,7 @@ class CurrentUsers extends React.Component {
                 <thead className="thead-light">
                     <tr>
                         <th>LP</th>
-                        <th>USER</th>
+                        <th className="userCol" onClick={this.props.sort}><FontAwesomeIcon icon="sort" color="#b9b9b9"/>USER</th>
                         <th>E-MAIL</th>
                         <th></th>
                     </tr>
